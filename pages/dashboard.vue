@@ -23,9 +23,10 @@ export default {
 	},
 	methods:{
 		addTodo(){
-				axios.post("/api/add-todo", {}).then(r => console.log(r.data))
+				this.$axios.post("/api/add-todo", {}).then(r => console.log(r.data))
 		},
 		logout() {
+			this.$axios.setHeader(false)
   			this.$auth.logout();
 		}
 	}

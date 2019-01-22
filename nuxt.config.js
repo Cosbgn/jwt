@@ -28,7 +28,7 @@ module.exports = {
 	},
 
 	auth: {
-		cookie: false, // We can't use cookies because we are serverless
+		cookie: true, // We can't use cookies because we are serverless
 		strategies: {
 			local: {
 				endpoints: {
