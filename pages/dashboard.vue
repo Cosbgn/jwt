@@ -3,8 +3,9 @@
 		<section class='section'>
 			Hello, you are now logged in
 			<hr />
+			{{$store.state.auth}}
 			<div class='buttons'>
-				<a class="button is-primary" @click="addTodo()">Add ToDo</a>
+				<a class="button is-primary" @click="addTodo()">Add To-do</a>
 				<a class="button is-danger" @click="logout()">Logout</a>
 			</div>
 		</section>
@@ -12,7 +13,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
 	middleware: 'auth',

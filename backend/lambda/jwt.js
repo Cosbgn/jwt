@@ -12,6 +12,7 @@ exports.handler = async (event, context) => {
 
 	if ("token" in body) { // We convert short lived email token to real one
 		const decodedMagicLink = jwt.verify(body['token'], secretKey)
+		console.log("DECODED EMAIL: ", decodedMagicLink.email)
 		const user = {email: decodedMagicLink.email}
 		return {
 			statusCode: 200,
