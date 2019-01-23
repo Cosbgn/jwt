@@ -27,23 +27,22 @@ exports.handler = async (event, context) => {
 	else { // We send a short lived token via Email
 		const token = jwt.sign({data: email}, secretKey, { expiresIn: '1h' })
 		const tokenUrl = `http://localhost:3000/login/?token=${token}`
-		const emailData = {
-						    "to":email,
-						    "subject":"Magic Login Link",
-						    "html": `<p>Hello, use this link to login <br> ${tokenUrl}</p>`,
-						    "company": "Acme",
-						    "sendername": "Acme Customer support"
-						}
-
 		// send email
-		//mail.post("", emailData)
 		console.log("Console log copy paste this url to loggin: ", tokenUrl)
-
-		.then(r => {
-			return { statusCode: 200, body: JSON.stringify({ type: 'success', message: 'Magic link sent' }) }
-		})
-		.catch(r => {
-			return { statusCode: 400, body: JSON.stringify({ type: 'error', message: 'Error sending magic link' }) }
-		})
+		return { statusCode: 200, body: JSON.stringify({ type: 'success', message: 'Magic link sent' }) }
+		// const emailData = {
+		// 					"to":email,
+		// 					"subject":"Magic Login Link",
+		// 					"html": `<p>Hello, use this link to login <br> ${tokenUrl}</p>`,
+		// 					"company": "Acme",
+		// 					"sendername": "Acme Customer support"
+		// 				}
+		//mail.post("", emailData)
+		// .then(r => {
+		// 	return { statusCode: 200, body: JSON.stringify({ type: 'success', message: 'Magic link sent' }) }
+		// })
+		// .catch(r => {
+		// 	return { statusCode: 400, body: JSON.stringify({ type: 'error', message: 'Error sending magic link' }) }
+		// })
 	}
 }

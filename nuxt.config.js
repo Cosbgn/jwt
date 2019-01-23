@@ -33,19 +33,12 @@ module.exports = {
 			local: { // If magicLink works we should use local:false
 				endpoints: {
 					//login: { url: 'api/login', method: 'post', propertyName: 'data.token' },
-					login: { url: 'api/login', method: 'post', propertyName: 'token' },
+					login: { url: 'api/jwt', method: 'post', propertyName: 'token' },
 					//register: { url: 'api/register', method: 'post', propertyName: 'data.token' },
 					user: { url: 'api/user', method: 'get', propertyName: false },
 					logout: false // Since we are stateless we simply remove the user from Localhost
 				}
 			},
-			magicLink: {
-				endpoints: {
-					login: { url: '/api/jwt', method: 'post', propertyName: 'token' },
-					user: { url: '/api/user', method: 'get', propertyName: false },
-					logout: false
-				}
-			}
 		}
 	},
 

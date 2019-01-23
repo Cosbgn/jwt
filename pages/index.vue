@@ -22,6 +22,7 @@
 export default {
 	methods:{
 		logout(){
+			this.$axios.setHeader(false);
 			this.$auth.logout();
 		}
 	}

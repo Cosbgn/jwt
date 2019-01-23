@@ -14,6 +14,7 @@
 						</div>
 						<div v-else>
 							<h1 class='title'>Agency Login</h1>
+							<div class="notification is-danger" v-if="error"> {{error}} </div>
 							<form method="post" @submit.prevent="sendMagicLink">
 								<div class="field">
 									<label class="label">Email</label>
@@ -63,12 +64,12 @@ export default {
 
 		async convertToken(magicToken){
 			try {
-				const res = await this.$auth.loginWith('magicLink', {
-					data: { token: magicToken}
-				})
-				// const res = await this.$auth.loginWith('local', {
-				// 	data: { token: magicToken, email:null, password:null }
+				// const res = await this.$auth.loginWith('magicLink', {
+				// 	data: { token: magicToken}
 				// })
+				const res = await this.$auth.loginWith('local', {
+					data: { token: magicToken }
+				})
 				const token = localStorage.getItem('auth._token.local')
 				if (token) {
 					this.$axios.setHeader('Authorization', token)
@@ -76,9 +77,6 @@ export default {
 				} else {this.error = "Error loggin in. Please try again"}
 				//this.$router.push('/dashboard/')
 			} catch (e) {
-				console.log("ERRRRROR")
-				console.log(e)
-				this.error = JSON.stringify(e)
 				this.error = e.response.data.message
 			}
 		},
@@ -105,3 +103,9 @@ export default {
 	}
 }
 </script>
+<style>
+.middle-page{
+	margin: 100px auto;
+	position: relative;
+}
+</style>
