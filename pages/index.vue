@@ -6,7 +6,7 @@
 					<h1 class='title'>Hello!</h1>
 					<hr />
 					<div class='buttons'>
-						<nuxt-link class='button is-link' to="/register/">Register</nuxt-link>
+						<!-- <nuxt-link class='button is-link' to="/register/">Register</nuxt-link> -->
 						<nuxt-link class='button is-primary' to="/login/">Login</nuxt-link>
 						<nuxt-link class='button is-warning' to="/dashboard/">Dashboard</nuxt-link>
 						<a class='button is-danger' @click="logout()">Logout</a>

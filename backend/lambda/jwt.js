@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const jwt = require('jsonwebtoken');
-const secretKey = "super_secret"
+const secretKey = "REPLACE_WITH_SUPER_SECRET_KEY_HERE"
 
 exports.handler = async (event, context) => {
 	if (event.httpMethod !== "POST") {
@@ -12,8 +12,9 @@ exports.handler = async (event, context) => {
 
 	if ("token" in body) { // We convert short lived email token to real one
 		const decodedMagicLink = jwt.verify(body['token'], secretKey)
-		console.log("DECODED EMAIL: ", decodedMagicLink.email)
-		const user = {email: decodedMagicLink.email}
+		console.log("decodedMagicLink: ", decodedMagicLink)
+		console.log("DECODED EMAIL: ", decodedMagicLink.data.email)
+		const user = decodedMagicLink.data
 		return {
 			statusCode: 200,
 			body: JSON.stringify({
@@ -25,7 +26,9 @@ exports.handler = async (event, context) => {
 		}
 	}
 	else { // We send a short lived token via Email
-		const token = jwt.sign({data: email}, secretKey, { expiresIn: '1h' })
+		console.log("Encoded in the token the email: ", email)
+		const user = {email:email}
+		const token = jwt.sign({data: user}, secretKey, { expiresIn: '1h' })
 		const tokenUrl = `http://localhost:3000/login/?token=${token}`
 		// send email
 		console.log("Console log copy paste this url to loggin: ", tokenUrl)
