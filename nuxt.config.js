@@ -39,7 +39,14 @@ module.exports = {
 					logout: false // Since we are stateless we simply remove the user from Localhost
 				}
 			},
-		}
+		},
+		redirect: {
+			login: '/login/',
+			logout: '/',
+			callback: '/login/',
+			home: '/agency/'
+		},
+		resetOnError:true // Logout when token expires
 	},
 
 	build: {

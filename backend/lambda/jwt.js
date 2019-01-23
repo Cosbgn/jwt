@@ -11,26 +11,15 @@ exports.handler = async (event, context) => {
 	const email = body.email
 
 	if ("token" in body) { // We convert short lived email token to real one
-		try {
-			const decodedMagicLink = jwt.verify(body['token'], secretKey)
-		} catch(e) {
-			return {
-				statusCode: 400,
-				body: JSON.stringify({ type: 'error', message: 'Provided token is expired or not valid.'})
+
+		return jwt.verify(body['token'], secretKey, (error, result) => {
+			if (error) {
+				return { statusCode: 400, body: JSON.stringify({ type: 'error', message: 'Provided token is expired or not valid', error:error }) }
+			} else {
+				return { statusCode: 200, body: JSON.stringify({type: 'success', message: 'Provided token is valid.', user:result.data, token: jwt.sign({data: result.data}, secretKey, { expiresIn: '180 days' })}) }
 			}
-		}
-		console.log("decodedMagicLink: ", decodedMagicLink)
-		console.log("DECODED EMAIL: ", decodedMagicLink.data.email)
-		const user = decodedMagicLink.data
-		return {
-			statusCode: 200,
-			body: JSON.stringify({
-				type: 'success',
-				message: 'Provided token is valid.',
-				user: user,
-				token: jwt.sign({data: user}, secretKey, { expiresIn: '180 days' })
-			})
-		}
+		})
+
 	}
 	else { // We send a short lived token via Email
 		console.log("Encoded in the token the email: ", email)
